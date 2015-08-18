@@ -72,29 +72,29 @@ public class PagePlugin implements Interceptor {
                     countStmt.close();
 
                     Page page = null;
-                    if (parameterObject instanceof Page) {    //参数就是Page实体
+                    if (parameterObject instanceof Page) { // 参数就是Page实体
                         page = (Page) parameterObject;
                         page.setTotalCount(count);
-                    } else {    //参数为某个实体，该实体拥有Page属性
+                    } else { // 参数为某个实体，该实体拥有Page属性
                         Field pageField = ReflectHelper.getFieldByFieldName(parameterObject, "page");
                         if (pageField != null) {
                             page = (Page) ReflectHelper.getValueByFieldName(parameterObject, "page");
                             if (page == null)
                                 page = new Page();
                             page.setTotalCount(count);
-                            ReflectHelper.setValueByFieldName(parameterObject, "page", page); //通过反射，对实体对象设置分页对象
+                            ReflectHelper.setValueByFieldName(parameterObject, "page", page); // 通过反射，对实体对象设置分页对象
                         } else {
                             throw new NoSuchFieldException(parameterObject.getClass().getName() + "不存在 page 属性！");
                         }
                     }
                     String pageSql = generatePageSql(sql, page);
-                    ReflectHelper.setValueByFieldName(boundSql, "sql", pageSql); //将分页sql语句反射回BoundSql.
+                    ReflectHelper.setValueByFieldName(boundSql, "sql", pageSql); // 将分页sql语句反射回BoundSql.
                 }
             }
         }
+        // 将执行权交给下一个拦截器
         return ivk.proceed();
     }
-
 
     /**
      * 对SQL参数(?)设值,参考org.apache.ibatis.executor.parameter.DefaultParameterHandler
@@ -185,3 +185,4 @@ public class PagePlugin implements Interceptor {
 //				System.out.println("pageSqlId property is not found!");
 //		}
     }
+}
