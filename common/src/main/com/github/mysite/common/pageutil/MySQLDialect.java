@@ -1,7 +1,7 @@
 package com.github.mysite.common.pageutil;
 
 /**
- * description:
+ * description:MYSQL 数据库实现
  *
  * @author: jy.chen
  * @version: 1.0

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * description:
+ * description: PAGE 分页对象
  *
  * @author: jy.chen
  * @version: 1.0
