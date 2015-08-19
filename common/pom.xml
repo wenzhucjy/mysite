@@ -14,7 +14,10 @@
     <name>common</name>
     <dependencies>
 
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
         <!-- LOGGING begin -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -50,6 +53,10 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>

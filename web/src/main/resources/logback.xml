@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- console log -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%rEx
+            </pattern>
+		</encoder>
+	</appender>
+    
+    <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
+    <!-- mysite log -->
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>D:/anyfish_web/logs/mysite-${bySecond}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>D:/anyfish_web/logs/mysite-${bySecond}.%d{yyyy-MM-dd}.log</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%rEx
+            </pattern>
+		</encoder>
+	</appender>
+	<!-- spring log -->
+	 <appender name="springAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>D:/anyfish_web/logs/mysite.spring.${bySecond}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>D:/anyfish_web/logs/mysite.spring.${bySecond}.%d{yyyy-MM-dd}.log</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%rEx</pattern>
+		</encoder>
+	</appender>
+
+	<!-- project default level -->
+	<logger name="com.github.mysite" level="DEBUG" />
+
+    <!-- show spring DEBUG/ERROR info -->
+    <logger name="org.springframework" level="INFO" additivity="false">
+		<appender-ref ref="springAppender" />
+	</logger>
+	
+	<!--log4jdbc -->
+	<!--	
+		<logger name="jdbc.sqlonly" level="INFO" additivity="false">
+            <appender-ref ref="console" />
+            <appender-ref ref="rollingFile" />
+        </logger>
+        <logger name="jdbc.resultsettable" level="INFO"/>
+         <logger name="jdbc.sqlonly" level="OFF"/>
+         <logger name="jdbc.audit" level="OFF"/>
+         <logger name="jdbc.resultset" level="OFF"/>
+         <logger name="jdbc.connection" level="OFF"/> -->
+	
+	<root level="DEBUG">
+		<appender-ref ref="console" />
+		<appender-ref ref="rollingFile" />
+	</root>
+</configuration>
