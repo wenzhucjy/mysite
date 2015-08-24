@@ -41,7 +41,7 @@
 
     <!-- 类型别名 -->
     <typeAliases>
-        <typeAlias alias="Page" type="com.github.mysite.common.pageutil.Page"/>
+        <typeAlias alias="Page" type="com.github.mysite.common.pageutil.PageInfo"/>
         <!--分页  -->
     </typeAliases>
 

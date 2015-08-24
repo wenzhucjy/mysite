@@ -1,4 +1,3 @@
-# Created by .ignore support plugin (hsz.mobi)
 ### Java template
 *.class
 
@@ -30,5 +29,5 @@ log/
 
 # jrebel #
 src/main/resources/rebel.xml
-
+*.rebel.xml
 

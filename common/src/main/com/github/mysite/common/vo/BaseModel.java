@@ -1,34 +1,47 @@
 package com.github.mysite.common.vo;
 
-import com.github.mysite.common.pageutil.Page;
+import com.github.mysite.common.pageutil.PageInfo;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
+
 /**
- * description:
+ * description:基础类
  *
  * @author: jy.chen
  * @version: 1.0
  * @since: 2015/8/19 - 15:17
  */
-public class BaseModel {
+public class BaseModel implements Serializable{
     
-    private Integer uuid;
-    private Page page = new Page();
+    private int uuid;
+    
+    private PageInfo pageInfo = new PageInfo();
 
-    public Page getPage() {
-        return page;
+    public PageInfo getPageInfo() {
+        return pageInfo;
     }
 
-    public void setPage(Page page) {
-        this.page = page;
+    public void setPageInfo(PageInfo pageInfo) {
+        this.pageInfo = pageInfo;
     }
 
-    public Integer getUuid() {
+    public void setUuid(int uuid) {
+        this.uuid = uuid;
+    }
+
+    public int getUuid() {
         return uuid;
     }
 
-    public void setUuid(Integer uuid) {
-        this.uuid = uuid;
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .omitNullValues()
+                .add("uuid", uuid)
+                .add("pageInfo", pageInfo)
+                .toString();
     }
 
     @Override

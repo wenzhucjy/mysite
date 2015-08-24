@@ -12,9 +12,10 @@ public class MySQLDialect extends Dialect {
     public String getLimitString(String sql, int skipResults, int maxResults) {
         sql = sql.trim();
         StringBuffer pagingSelect = new StringBuffer(sql.length() + 50);
-        pagingSelect.append(" limit ")
+        pagingSelect.append(sql)
+                    .append(" limit ")
                     .append(skipResults)
-                    .append(",")
+                    .append(" , ")
                     .append(maxResults);
         return pagingSelect.toString();
     }

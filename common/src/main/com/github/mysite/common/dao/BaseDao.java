@@ -9,15 +9,15 @@ import java.util.List;
  * @version: 1.0
  * @since: 2015/8/19 - 15:15
  */
-public interface BaseDao<M,QM> {
+public interface BaseDAO<M,QM> {
     
     public void create(M m);
 
     public void update(M m);
 
-    public void delete(int uuid);
+    public void delete(String uuid);
 
-    public M getByUuid(int uuid);
+    public M getByUuid(String uuid);
 
     public List<M> getByConditionPage(QM qm);
 }
