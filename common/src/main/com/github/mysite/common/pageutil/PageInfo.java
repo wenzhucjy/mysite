@@ -58,6 +58,7 @@ public class PageInfo<E> implements Serializable{
     }
 
     public void setTotalPage(int totalPage) {
+        
         this.totalPage = totalPage;
     }
 
@@ -70,7 +71,7 @@ public class PageInfo<E> implements Serializable{
     }
 
     public int getTotalPage() {
-        return (int) Math.ceil(totalCount * 1.0 / pageSize);
+        return (int) Math.ceil(getTotalCount() * 1.0 / getPageSize());
     }
 
     /**

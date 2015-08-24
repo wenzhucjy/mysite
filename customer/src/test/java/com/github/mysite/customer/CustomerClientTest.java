@@ -1,4 +1,4 @@
-package com.github.mysite.customer.test;
+package com.github.mysite.customer;
 
 import com.github.mysite.common.pageutil.PageInfo;
 import com.github.mysite.customer.service.ICustomerService;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * description:
+ * description:Customer test module.
  *
  * @author: jy.chen
  * @version: 1.0
@@ -45,12 +45,8 @@ public class CustomerClientTest {
         
         PageInfo<CustomerModel> p = t.getS().getByConditionPage(cqm);
         
-        System.out.println("list==" + p);
+        System.out.println("customer list==" + p);
         
-        
-        PageInfo<CustomerModel> p2 = t.getS().getByConditionPage(cqm);
-        
-        System.out.println("list2222==" + p);
     }
 
 }
