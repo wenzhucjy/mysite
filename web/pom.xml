@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.wenzhu</groupId>
-            <artifactId>ordermgr</artifactId>
+            <artifactId>orderMgr</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>

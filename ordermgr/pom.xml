@@ -7,11 +7,11 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>ordermgr</artifactId>
+    <artifactId>orderMgr</artifactId>
     <packaging>war</packaging>
-    <name>ordermgr Maven Webapp</name>
+    <name>orderMgr Maven Webapp</name>
     <build>
-        <finalName>ordermgr</finalName>
+        <finalName>orderMgr</finalName>
     </build>
     <dependencies>
 

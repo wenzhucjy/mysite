@@ -36,7 +36,7 @@
         <property name="dataSource" ref="dataSource"/>
         <!-- 显式指定Mapper文件位置 -->
         <property name="mapperLocations" value="classpath:/mapper/**/*.xml"/>
-        <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"></property>
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
     </bean>
 
     <!-- 扫描basePackage下所有以@MyBatisDao注解的接口 -->
@@ -63,10 +63,10 @@
     <task:scheduler id="scheduler" pool-size="10"/>
     <task:annotation-driven scheduler="scheduler" executor="executor" proxy-target-class="true"/>-->
 
-      <!--配置 druid 数据源 -->
-    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        
-       <!-- <property name="driverClassName" value="${jdbc.driver}"/>-->
+    <!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
+        <property name="driverClassName" value="${jdbc.driver}"/>
 
         <!-- 基本属性 url、user、password -->
         <property name="url" value="${jdbc.url}"/>
@@ -79,68 +79,31 @@
         <property name="maxActive" value="${jdbc.pool.maxActive}"/>
 
         <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <property name="maxWait" value="60000"/>
 
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
 
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
 
         <property name="validationQuery" value="${jdbc.testSql}"/>
-        <property name="testWhileIdle" value="${jdbc.testWhileIdle}"/>
-        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
-        <property name="testOnReturn" value="${jdbc.testOnReturn}"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用）
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
 
         <!-- 配置监控统计拦截的filters -->
-        <property name="filters" value="${jdbc.filters}"/>
-        
-          
-        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
-        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
-        <property name="logAbandoned" value="${jdbc.logAbandoned}"/>
-          
-        <!-- 配置监控统计拦截的filters -->
-        <property name="proxyFilters">
-            <list>
-                <ref bean="stat-filter"/>
-                <ref bean="wall-filter"/>
-            </list>
-        </property>
-        <property name="useGlobalDataSourceStat" value="${jdbc.useGlobalDataSourceStat}"/>
-        <!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用）-->
-        <!--<property name="poolPreparedStatements" value="true" />-->
-        <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
-        <!--提示Druid数据源需要对数据库密码进行解密，ConfigFilter解密-->
-        <property name="connectionProperties" value="config.decrypt=true"/>
+        <property name="filters" value="stat"/>
     </bean>
-
     <!-- 支持命名参数特性 :name -->
     <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource" index="0">
         </constructor-arg>
     </bean>
-
-    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
-       <property name="slowSqlMillis" value="${jdbc.slowSqlMillis}"/>
-       <property name="logSlowSql" value="${jdbc.logSlowSql}"/>
-       <property name="mergeSql" value="${jdbc.mergeSql}"/>
-   </bean>
-   
-   <!--&lt;!&ndash;防御SQL注入攻击&ndash;&gt;-->
-   <!--<bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig" init-method="init">-->
-       <!--&lt;!&ndash; 指定配置装载的目录,缺省 META-INF/druid/wall/mysql  &ndash;&gt;-->
-       <!--&lt;!&ndash;<property name="dir" value="META-INF/druid/wall/mysql"/>&ndash;&gt;-->
-       <!--&lt;!&ndash; 检查SELECT语句的WHERE子句是否是一个永真条件，默认true &ndash;&gt;-->
-       <!--<property name="selectWhereAlwayTrueCheck" value="false"/>-->
-       <!--&lt;!&ndash; 检查SELECT语句的HAVING子句是否是一个永真条件 &ndash;&gt;-->
-       <!--<property name="selectHavingAlwayTrueCheck" value="false"/>-->
-   <!--</bean>-->
-
-   <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
-       <property name="dbType" value="mysql"/>
-       <!--<property name="config" ref="wall-filter-config"/>-->
-   </bean>
 
     <!-- file upload -->
    <!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

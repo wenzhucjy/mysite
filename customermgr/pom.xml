@@ -7,9 +7,9 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>customermgr</artifactId>
+    <artifactId>customerMgr</artifactId>
     <packaging>war</packaging>
-    <name>customermgr Maven Webapp</name>
+    <name>customerMgr Maven Webapp</name>
     <dependencies>
 
         <dependency>
@@ -130,7 +130,53 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
+
+    <!--maven profile实现多环境打包-->
+    <profiles>
+        <profile>
+            <id>development</id>
+            <properties>
+                <env>development</env>
+            </properties>
+            <!--默认激活-->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+               <!-- &lt;!&ndash;根据操作系统类型自动激活条件&ndash;&gt;
+                <os>
+                    <family>unix</family>
+                </os>-->
+            </activation>
+        </profile>
+        <profile>
+            <id>qa</id>
+            <properties>
+                <env>qa</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <env>production</env>
+            </properties>
+        </profile>
+    </profiles>
+    
     <build>
-        <finalName>customermgr</finalName>
+        <finalName>customerMgr</finalName>
+        <filters>
+            <filter>filters/profile-${env}.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                        <include>applicationContext.xml</include>
+                </includes>
+              <!--  <excludes>
+                    <exclude>**/*.xml</exclude>
+                </excludes>-->
+            </resource>
+        </resources>
     </build>
 </project>
